@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Ganesh Chaturthi</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+     
+    /* === Base Styles === */
+    :root{
+      --accent:#f57c00;
+      --accent-2:#ffb300;
+      --muted:#666;
+      --card-bg: rgba(255,255,255,0.85);
+      --card-bg-dark: rgba(255,255,255,0.05);
+    }
+    * { box-sizing: border-box; }
+    html,body { height:100%; }
+    body {
+      margin: 0;
+      font-family: "Poppins", Arial, sans-serif;
+      background: linear-gradient(to bottom, #fff3e0, #fce4ec, #fff9c4);
+      color: #222;
+      -webkit-font-smoothing:antialiased;
+      transition: background 0.4s, color 0.4s;
+    }
+    body.dark {
+      background: linear-gradient(to bottom, #080808, #131313, #0b0b0b);
+      color: #f2f2f2;
+    }
+
+    /* page wrapper to control stacking above diyas */
+    .page {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+    }
+
+    h1,h2,h3 { margin: 0.4em 0; font-family: "Baloo 2", cursive; }
+    p, label, input, textarea, button { font-family: "Poppins", sans-serif; }
+
+    a, button { cursor: pointer; }
+
+    /* === Header === */
+    header{
+      position: sticky;
+      top:0;
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:12px 20px;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      z-index: 30;
+    }
+    body.dark header{
+      background: rgba(18,18,18,0.75);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .title { font-weight:700; color: var(--accent); font-size:1.1rem; }
+    .right { margin-left:auto; display:flex; align-items:center; gap:10px; }
+
+    .btn {
+      padding:8px 12px;
+      border-radius:10px;
+      border:none;
+      background: linear-gradient(135deg,var(--accent),var(--accent-2));
+      color: white;
+      font-weight:600;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 18px rgba(0,0,0,0.18); }
+    .btn.secondary { background: #e0e0e0; color:#222; font-weight:600; }
+    .btn.secondary:hover { background:#d5d5d5; }
+
+    /* === Hero === */
+    .hero {
+      text-align:center;
+      padding:34px 18px 18px;
+    }
+    .hero h1 { font-size:2.6rem; color: #c62828; text-shadow: 1px 1px 6px rgba(0,0,0,0.08); margin-bottom:12px;}
+    .hero img.ganesha {
+      max-width:170px; display:block; margin:10px auto; border-radius:12px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    }
+    .hero p { color: var(--muted); font-size:1.05rem; margin-top:12px; }
+
+    /* === Ganesh Mantra Glow & Pulse === */
+    .mantra {
+      text-align:center;
+      margin-top:14px;
+      font-size:1.65rem;
+      font-weight:700;
+      color: #ff6f00;
+      letter-spacing:0.6px;
+      text-shadow: 0 0 8px rgba(255,200,120,0.9), 0 0 18px rgba(255,120,0,0.8);
+      animation: mantraGlow 2.2s ease-in-out infinite alternate, mantraPulse 3.6s ease-in-out infinite;
+      display:inline-block;
+      padding:6px 14px;
+      border-radius:12px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      backdrop-filter: blur(2px);
+    }
+    body.dark .mantra {
+      color: #ffd54f;
+      text-shadow: 0 0 12px rgba(255,220,120,0.95), 0 0 28px rgba(255,140,0,0.9);
+    }
+    @keyframes mantraGlow {
+      from {
+        text-shadow: 0 0 6px rgba(255,200,120,0.7), 0 0 14px rgba(255,120,0,0.6);
+        transform: translateY(0) scale(1);
+      }
+      to {
+        text-shadow: 0 0 18px rgba(255,245,180,1), 0 0 36px rgba(255,160,0,0.95);
+        transform: translateY(-4px) scale(1.02);
+      }
+    }
+    @keyframes mantraPulse {
+      0% { opacity: 0.9; }
+      50% { opacity: 1; transform: translateY(-2px) scale(1.03); }
+      100% { opacity: 0.95; transform: translateY(0) scale(1); }
+    }
+
+    /* === Cards & Sections === */
+    .cards {
+      display:grid;
+      grid-template-columns:1fr;
+      gap:20px;
+      max-width:980px;
+      margin:20px auto;
+      padding:0 18px;
+    }
+    @media(min-width:700px){ .cards{ grid-template-columns:1fr 1fr; } }
+    .card {
+      background: var(--card-bg);
+      padding:18px;
+      border-radius:16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+      transition: transform .25s ease, background .25s ease;
+    }
+    .card:hover { transform: translateY(-6px); }
+    body.dark .card { background: var(--card-bg-dark); }
+
+    /* countdown */
+    .countdown {
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:12px;
+      margin-top:10px;
+    }
+    .count-item {
+      padding:12px;
+      border-radius:12px;
+      background: linear-gradient(180deg,#fff,#fff9e6);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      text-align:center;
+    }
+    body.dark .count-item { background: rgba(255,255,255,0.06); }
+    .count-value { font-size:1.45rem; font-weight:700; color: #e65100; }
+    .count-label { font-size:0.82rem; color:var(--muted); margin-top:6px; }
+
+    /* gallery */
+    .gallery { max-width:980px; margin:28px auto; padding:0 18px; }
+    .gallery-grid { display:grid; gap:12px; grid-template-columns: repeat(auto-fill, minmax(150px,1fr)); }
+    .gallery-item {
+      border-radius:12px; aspect-ratio:4/3;
+      display:flex; align-items:center; justify-content:center; font-weight:700;
+      background: radial-gradient(circle at top left, rgba(255,183,77,0.55), rgba(244,143,177,0.35));
+      transition: transform .25s ease;
+    }
+    .gallery-item:hover { transform: scale(1.06); }
+    body.dark .gallery-item { background: radial-gradient(circle at top left, rgba(255,183,77,0.12), rgba(244,143,177,0.08)); }
+
+    /* wishes */
+    .wishes { max-width:980px; margin:28px auto; padding:0 18px; display:grid; gap:20px; grid-template-columns:1fr; }
+    @media(min-width:700px){ .wishes{ grid-template-columns: 1fr 1fr; } }
+    input, textarea, input[type=datetime-local] {
+      width:100%; padding:10px 12px; border-radius:8px; border:1px solid rgba(0,0,0,0.08);
+      outline:none; font-size:0.95rem; margin-top:6px;
+    }
+    textarea { min-height:90px; resize:vertical; }
+    .wish-card {
+      background: rgba(255,255,255,0.9); padding:12px 14px; border-radius:10px; box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+    }
+    body.dark .wish-card { background: rgba(255,255,255,0.04); }
+
+    /* footer */
+    footer { text-align:center; padding:20px; border-top:1px solid rgba(0,0,0,0.06); margin-top:30px; color:var(--muted); }
+    body.dark footer { border-top:1px solid rgba(255,255,255,0.05); color:#ccc; }
+
+    /* === Floating Diyas (container above background but below page content) === */
+    /* Floating Diyas */
+.diyas {
+  position: fixed;
+  bottom: -100px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  pointer-events: none;
+}
+
+.diya {
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(circle, #ffcc80, #ff6f00);
+  border-radius: 50%;
+  animation: float 8s linear infinite;
+  box-shadow: 0 0 15px 5px rgba(255, 140, 0, 0.6);
+}
+
+.diya:nth-child(2) {
+  animation-delay: 2s;
+}
+.diya:nth-child(3) {
+  animation-delay: 4s;
+}
+
+@keyframes float {
+  from {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-120vh) scale(0.8);
+    opacity: 0;
+  }
+}
+
+    /* floatUp moves the diya up the page */
+    @keyframes floatUp {
+      0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+      8%   { opacity: 1; }
+      75%  { opacity: 0.95; }
+      100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+    }
+    /* slow subtle flicker/glow */
+    @keyframes diyaGlow {
+      0% { filter: drop-shadow(0 4px 8px rgba(255,140,0,0.3)) hue-rotate(0deg); }
+      50% { filter: drop-shadow(0 8px 16px rgba(255,200,80,0.55)) hue-rotate(8deg); transform: scale(1.02); }
+      100% { filter: drop-shadow(0 4px 8px rgba(255,140,0,0.28)) hue-rotate(0deg); transform: scale(1); }
+    }
+
+    /* small responsive tweaks */
+    @media (max-width:420px){
+      .hero h1 { font-size:1.8rem; }
+      .mantra { font-size:1.25rem; padding:6px 10px; }
+      .btn { padding:7px 10px; font-size:0.95rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating Diyas container (generated by JS)
+  <div class="diya-container" id="diyaContainer" aria-hidden="true"></div> -->
+
+  <div class="page">
+    <!-- Header -->
+    
+<header>
+  <div>
+    <!-- <span class="title" style="display:block;font-size:1rem;color:#e65100;">Monya</span> -->
+    <span class="title">Happy Ganesh Chaturthi</span>
+  </div>
+  <div class="right">
+    <button class="btn secondary" id="shareBtn">Share</button>
+    <label style="display:flex;align-items:center;gap:6px;">
+      🌞 <input id="darkToggle" type="checkbox" style="transform:scale(1.02);margin-left:6px"> 🌙
+    </label>
+  </div>
+</header>
+
+  <!-- Floating Diyas -->
+  <div class="diyas">
+    <div class="diya"></div>
+    <div class="diya"></div>
+    <div class="diya"></div>
+  </div>
+<!-- <section class="wish-card">
+  <h2>🪔 Create Your Ganesh Chaturthi Greeting 🪔</h2>
+  <input type="text" id="username" placeholder="Enter Your Name">
+  <button id="generateCard">Generate Card</button>
+
+  <div class="card-output" id="cardOutput"></div> -->
+
+<div class="card-actions" id="cardActions" style="display:none;">
+  <button id="downloadCard">📥 Download</button>
+  <button id="shareWhatsApp">📲 Share on WhatsApp</button>
+</div>
+
+    <!-- Hero -->
+    <section class="hero" aria-labelledby="hero-title">
+      <h1 id="hero-title">🙏 Ganapati Bappa Morya!</h1>
+
+      <!-- Ganapati image -->
+      <img class="ganesha" src="ganesha.jpg" alt="Lord Ganesha" />
+
+      <!-- Mantra (glowing + subtle pulse) -->
+      <div class="mantra" role="img" aria-label="Shree Ganesh Mantra">✨ श्री गणेशाय नमः ✨</div>
+
+      <p>May Lord Ganesha bless you with <strong>buddhi</strong>, <strong>sampatti</strong>, and <strong>ananda</strong>.</p>
+    </section>
+
+    <!-- Countdown & Date Setter -->
+    <section class="cards" aria-label="Countdown and date">
+      <div class="card">
+        <h3>📅 Festival Countdown</h3>
+        <div class="countdown" id="countdown" aria-live="polite"></div>
+        <p style="font-size:0.82em;color:var(--muted);margin-top:8px">Tip: Set the exact festival date/time below.</p>
+      </div>
+      <div class="card">
+        <h3>✨ Set Your Festival Date</h3>
+        <label for="dateInput">Date & Time:</label>
+        <input type="datetime-local" id="dateInput" />
+        <p style="font-size:0.82em;color:var(--muted);margin-top:8px">This controls the live countdown above.</p>
+      </div>
+    </section>
+
+    <!-- Mantra & Info -->
+    <section class="cards" style="margin-top:6px;">
+      <div class="card">
+        <h3>🎶 Ganesh Mantra</h3>
+        <p style="font-size:1.2rem;margin-top:8px">ॐ गं गणपतये नमः ।</p>
+        <!-- <audio controls style="margin-top:12px;width:100%;"> -->
+          <div class="mantra">
+          <p>॥ वक्रतुंड महाकाय सूर्यकोटि समप्रभ ॥</p>
+          <p>॥ निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा ॥</p>
+          </div>
+          <!-- <source src="https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav" type="audio/wav"/> -->
+        </audio>
+      </div>
+      <div class="card">
+        <h3>About Ganesh Chaturthi</h3>
+        <p>Ganesh Chaturthi celebrates the birth of Lord Ganesha — the remover of obstacles and lord of beginnings. Families install idols, perform aarti, share prasad, and spread joy.</p>
+        <ul>
+          <li>❤️ Wisdom</li>
+          <li>❤️ Prosperity</li>
+          <li>❤️ Good Fortune</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Gallery -->
+<!-- Gallery -->
+<section class="gallery" aria-label="Gallery">
+  <h2 style="text-align:center;margin-bottom:12px">✨ Festive Gallery ✨</h2>
+
+  <input type="file" id="fileInput" multiple accept="image/*">
+  <div id="gallery"></div>
+</section>
+
+<style>
+  .gallery input[type=file]{
+    margin:10px auto;
+    padding:8px;
+    background:#f59e0b;
+    border:none;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+    color:#111;
+    display:block;
+  }
+  #gallery{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:12px;
+    margin-top:20px;
+  }
+  .item{
+    position:relative;
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 4px 12px rgba(0,0,0,0.5);
+    transition:transform .2s;
+  }
+  .item:hover{transform:scale(1.05)}
+  .item img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .remove{
+    position:absolute;
+    top:6px;
+    right:6px;
+    background:rgba(239,68,68,0.9);
+    border:none;
+    color:#fff;
+    border-radius:50%;
+    width:26px;
+    height:26px;
+    cursor:pointer;
+    display:none;
+  }
+  .item:hover .remove{display:block}
+</style>
+
+<script>
+  const input=document.getElementById('fileInput'), gallery=document.getElementById('gallery');
+  input.onchange=e=>{
+    [...e.target.files].forEach(f=>{
+      if(f.type.startsWith('image/')){
+        const url=URL.createObjectURL(f);
+        const div=document.createElement('div');
+        div.className='item';
+        div.innerHTML=`<img src="${url}"><button class="remove">&times;</button>`;
+        div.querySelector('.remove').onclick=()=>div.remove();
+        gallery.appendChild(div);
+      }
+    });
+    input.value="";
+  };
+</script>
+
+
+    <!-- Wishes -->
+    <section class="wishes" aria-label="Wishes">
+      <div class="card">
+        <h3>🎁 Send Your Wishes</h3>
+        <label for="wishName">Name:</label>
+        <input id="wishName" placeholder="Your name" />
+        <label for="wishMessage" style="margin-top:8px;display:block">Message:</label>
+        <textarea id="wishMessage" placeholder="Your festive message"></textarea>
+        <div style="display:flex;gap:10px;margin-top:12px">
+          <button class="btn" id="addWish">✨ Add Wish</button>
+          <button class="btn secondary" id="shareBtn2">📤 Share Page</button>
+        </div>
+      </div>
+
+      <div class="wish-list" id="wishList" aria-live="polite">
+        <div class="wish-card"><b>Monya</b><br/>Ganapati Bappa Morya! May wisdom and joy fill every home.</div>
+      </div>
+    </section>
+
+    <footer>
+      Made with love for Ganapati 💛 • Customize text, photos, and audio to make it yours.
+    </footer>
+  </div>
+
+  <script>
+    /* ---------- Utility: local datetime for input ---------- */
+    function toDateTimeLocal(date) {
+      // return YYYY-MM-DDTHH:MM in local timezone
+      const tzOffset = date.getTimezoneOffset() * 60000;
+      const localISO = new Date(date.getTime() - tzOffset).toISOString().slice(0,16);
+      return localISO;
+    }
+
+    /* ---------- Countdown ---------- */
+    const dateInput = document.getElementById('dateInput');
+    const countdownDiv = document.getElementById('countdown');
+
+    // Default festival date: 10 days from now (local)
+    const defaultDate = new Date(Date.now() + 10*24*60*60*1000);
+    dateInput.value = toDateTimeLocal(defaultDate);
+
+    function updateCountdown() {
+      const target = new Date(dateInput.value);
+      if (isNaN(target)) {
+        countdownDiv.textContent = 'Please set a valid date & time';
+        return;
+      }
+      const now = new Date();
+      let diff = Math.max(0, target - now);
+
+      const days = Math.floor(diff/(1000*60*60*24));
+      const hours = Math.floor((diff/(1000*60*60)) % 24);
+      const mins = Math.floor((diff/(1000*60)) % 60);
+      const secs = Math.floor((diff/1000) % 60);
+
+      countdownDiv.innerHTML = `
+        <div class="count-item"><div class="count-value">${String(days).padStart(2,'0')}</div><div class="count-label">Days</div></div>
+        <div class="count-item"><div class="count-value">${String(hours).padStart(2,'0')}</div><div class="count-label">Hours</div></div>
+        <div class="count-item"><div class="count-value">${String(mins).padStart(2,'0')}</div><div class="count-label">Minutes</div></div>
+        <div class="count-item"><div class="count-value">${String(secs).padStart(2,'0')}</div><div class="count-label">Seconds</div></div>
+      `;
+    }
+    dateInput.addEventListener('change', updateCountdown);
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    /* ---------- Dark mode toggle ---------- */
+    const darkToggle = document.getElementById('darkToggle');
+    darkToggle.addEventListener('change', e => {
+      document.body.classList.toggle('dark', e.target.checked);
+    });
+
+    /* ---------- Wishes ---------- */
+    const wishList = document.getElementById('wishList');
+    document.getElementById('addWish').addEventListener('click', ()=> {
+      const name = document.getElementById('wishName').value.trim();
+      const msg  = document.getElementById('wishMessage').value.trim();
+      if (!name || !msg) return alert('Please enter both name and message.');
+      const div = document.createElement('div');
+      div.className = 'wish-card';
+      div.innerHTML = `<b>${escapeHtml(name)}</b><br/>${escapeHtml(msg)}`;
+      wishList.prepend(div);
+      document.getElementById('wishName').value = '';
+      document.getElementById('wishMessage').value = '';
+    });
+
+    /* ---------- Share ---------- */
+    function shareSite(){
+      const text = "✨ Happy Ganesh Chaturthi! Ganapati Bappa Morya!";
+      if (navigator.share) {
+        navigator.share({ title: "Happy Ganesh Chaturthi", text, url: window.location.href }).catch(()=>{});
+      } else if (navigator.clipboard) {
+        navigator.clipboard.writeText(text + ' ' + window.location.href).then(()=>{ alert('Link copied to clipboard!'); });
+      } else {
+        prompt('Copy this message:', text + ' ' + window.location.href);
+      }
+    }
+    document.getElementById('shareBtn').onclick = shareSite;
+    document.getElementById('shareBtn2').onclick = shareSite;
+    
+    /* ---------- Floating Diyas generation ---------- */
+    (function createDiyas(){
+      const container = document.getElementById('diyaContainer');
+      const count = 8; // number of diyas visible at once
+      for (let i=0;i<count;i++){
+        const d = document.createElement('div');
+        d.className = 'diya';
+        // random left position [2%, 94%]
+        const left = Math.round(2 + Math.random()*92);
+        // random size factor
+        const size = 14 + Math.random()*26; // px font-size
+        // random duration & delay for each diya
+        const dur = 10 + Math.random()*12; // seconds
+        const delay = Math.random()*8; // seconds
+
+        d.style.left = left + '%';
+        d.style.fontSize = size + 'px';
+        d.style.animationDuration = `${dur}s, ${4 + Math.random()*3}s`; // floatUp duration, diyaGlow duration
+        d.style.animationDelay = `${delay}s, ${delay}s`;
+
+        // using emoji - place directly
+        d.textContent = '🪔';
+
+        container.appendChild(d);
+      }
+
+      // periodically add/remove to keep flow continuous
+      setInterval(()=>{
+        // sometimes add one more diya with different settings
+        const d = document.createElement('div');
+        d.className = 'diya';
+        const left = Math.round(2 + Math.random()*92);
+        const size = 12 + Math.random()*30;
+        const dur = 10 + Math.random()*14;
+        const delay = 0;
+        d.style.left = left + '%';
+        d.style.fontSize = size + 'px';
+        d.style.animationDuration = `${dur}s, ${3 + Math.random()*4}s`;
+        d.style.animationDelay = `${delay}s, ${delay}s`;
+        d.textContent = '🪔';
+        container.appendChild(d);
+
+        // cleanup old diyas to avoid too many nodes
+        if (container.children.length > 25) {
+          container.removeChild(container.children[0]);
+        }
+      }, 3000);
+    })();
+
+    /* ---------- Small helpers ---------- */
+    function escapeHtml(str){
+      return str.replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+    }
+
+    // Optional: ensure the page has an accessible landmark focus after loading
+    window.addEventListener('load', ()=> {
+      // nothing required, but ready for future additions
+    });
+      
+    
+  </script>
+</body>
+</html>
